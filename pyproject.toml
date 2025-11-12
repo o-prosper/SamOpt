@@ -1,0 +1,26 @@
+[project]
+name = "samopt"
+version = "0.1.0"
+description = "A module for determining optimal data sampling strategies for epidemiological models."
+readme = "README.md"
+authors = [
+  { name="Olivia Prosper Feldman", email="oprosper@utk.edu" }
+]
+license = { text = "MIT" }
+dependencies = [
+  # e.g. "numpy>=1.20", "requests"
+]
+requires-python = ">=3.10"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[project.scripts]
+# monlosses =  "samopt.bin.monitor_losses:main"
+
+[project.urls]
+"Homepage" = "https://github.com/o-prosper/SamOpt"
