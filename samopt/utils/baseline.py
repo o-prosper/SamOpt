@@ -21,7 +21,8 @@ class SIRSetup:
     T: np.ndarray
     tmin: float
     tmax: float
-    maxiter: int            # <-- make this a real field (typed)
+    maxiter: int            
+    trans_matrix: np.ndarray
 
 def _time_grid(tfinal: float, dt: float) -> np.ndarray:
     if dt <= 0:

@@ -11,6 +11,7 @@ def CTMC(purse):#
     maxiter = purse.maxiter
     mod_pars = purse.mod_pars
     init_cond = purse.init_cond
+    trans_matrix = purse.trans_matrix
     # Set state variables equal to initial condition vector
     x  = [purse.init_cond] # This will be used to save the state values at the reporting times
     xt = np.array(init_cond) # This will be used to update the states at each event time
