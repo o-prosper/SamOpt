@@ -50,6 +50,12 @@ def make_setup(
     tspan = (0.0, float(tfinal))
     T = _time_grid(tfinal=float(tfinal), dt=float(dt))
 
+    # Transition matrix for [S, I, R, C, Cobs]
+    trans_matrix = np.array([
+        [-1, +1, 0, +1, 0],   # infection
+        [ 0, -1, +1, 0,  0],  # recovery
+    ], dtype=float)
+
     return SIRSetup(
         alpha=alpha,
         beta=beta,
@@ -66,5 +72,7 @@ def make_setup(
         T=T,
         tmin=float(tspan[0]),
         tmax=float(T[-1]),
-        maxiter=int(maxiter),     # <-- pass the value in
+        maxiter=int(maxiter),     
+        trans_matrix=trans_matrix,
+
     )
