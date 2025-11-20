@@ -1,4 +1,5 @@
 # data_generator.py
+import numpy as np
 
 def CTMC(purse):
     import numpy as np
@@ -89,3 +90,27 @@ def CTMC(purse):
 
     # xt is current state at last simulated event time
     return X_report, xt, event_times, event_states
+
+    
+def CTMC_bank(purse, n_sims: int):
+    """
+    Run n_sims independent CTMC realizations with the same setup (purse),
+    and store the observations at the reporting times T.
+
+    Returns
+    -------
+    bank : np.ndarray
+        Array of shape (n_sims, len(T), state_dim), where state_dim is
+        the length of the state vector (e.g. 5 for [S, I, R, C, Cobs]).
+    """
+    import numpy as np
+    
+    T = purse.T
+    bank = []
+
+    for _ in range(n_sims):
+        X, _, _, _ = CTMC(purse)       # X has shape (len(T), state_dim)
+        bank.append(X)
+
+    return np.stack(bank, axis=0)      # (n_sims, len(T), state_dim)
+

@@ -37,7 +37,7 @@ def make_setup(
     beta: float = 0.002,
     alpha: float = 0.476,
     N0: int = 763,
-    I0: int = 25,
+    I0: int = 3,#25,
     R0: int = 0,
     C0: int = 0,
     Cobs0: int = 0,
