@@ -1,5 +1,7 @@
 # data_generator.py
 import numpy as np
+import csv
+
 
 def CTMC(purse):
     import numpy as np
@@ -101,7 +103,7 @@ def CTMC_bank(purse, n_sims: int):
     -------
     bank : np.ndarray
         Array of shape (n_sims, len(T), state_dim), where state_dim is
-        the length of the state vector (e.g. 5 for [S, I, R, C, Cobs]).
+        the length of the state vector (e.g. 5 for [S, I, R, C]).
     """
     import numpy as np
     
@@ -114,3 +116,28 @@ def CTMC_bank(purse, n_sims: int):
 
     return np.stack(bank, axis=0)      # (n_sims, len(T), state_dim)
 
+
+def save_ctmc_bank_csv(bank, filepath):
+    """
+    Save a CTMC bank to a CSV file in simple long format:
+    sim_index, time_index, S, I, R, C
+
+    Parameters
+    ----------
+    bank : np.ndarray
+        Shape (n_sims, n_times, state_dim)
+    filepath : str
+        Path to output CSV file.
+    """
+    n_sims, n_times, state_dim = bank.shape
+
+    header = ["sim", "time", "S", "I", "R", "C"]
+
+    with open(filepath, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(header)
+
+        for sim in range(n_sims):
+            for t in range(n_times):
+                row = [sim, t] + bank[sim, t].tolist()
+                writer.writerow(row)

@@ -12,7 +12,6 @@ class SIRSetup:
     I0: int
     R0: int
     C0: int
-    Cobs0: int
     init_cond: np.ndarray
     mod_pars: np.ndarray
     tspan: tuple
@@ -40,21 +39,20 @@ def make_setup(
     I0: int = 3,#25,
     R0: int = 0,
     C0: int = 0,
-    Cobs0: int = 0,
     tfinal: float = 20.0,
     dt: float = 1.0,
     maxiter: int = 10000,
 ):
     S0 = N0 - I0 - R0
-    init_cond = np.array([S0, I0, R0, C0, Cobs0], dtype=float)
+    init_cond = np.array([S0, I0, R0, C0], dtype=float)
     mod_pars = np.array([alpha, beta], dtype=float)
     tspan = (0.0, float(tfinal))
     T = _time_grid(tfinal=float(tfinal), dt=float(dt))
 
-    # Transition matrix for [S, I, R, C, Cobs]
+    # Transition matrix for [S, I, R, C]
     trans_matrix = np.array([
-        [-1, +1, 0, +1, 0],   # infection
-        [ 0, -1, +1, 0,  0],  # recovery
+        [-1, +1, 0, +1],   # infection
+        [ 0, -1, +1, 0],  # recovery
     ], dtype=float)
 
     return SIRSetup(
@@ -64,7 +62,6 @@ def make_setup(
         I0=I0,
         R0=R0,
         C0=C0,
-        Cobs0=Cobs0,
         init_cond=init_cond,
         mod_pars=mod_pars,
         tspan=tspan,
